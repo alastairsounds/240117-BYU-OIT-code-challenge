@@ -4,7 +4,7 @@ import fetch from "node-fetch";
 const app = express();
 const port = 3000;
 
-app.get("/movies", async (req, res) => {
+app.get(`/movies?search=${title}`, async (req, res) => {
   const url = "https://api.themoviedb.org/3/authentication";
   const options = {
     method: "GET",
@@ -19,6 +19,21 @@ app.get("/movies", async (req, res) => {
     .then((res) => res.json())
     .then((json) => console.log(json))
     .catch((err) => console.error("error:" + err));
+
+  // TODO: limit the number of results to 10
+  // No option to limit number of results via parameter
+  // see: https://www.themoviedb.org/talk/522eeae419c2955e90252e23
+  // Limiting done on client side via
+  // TODO: clean up reference
+  /* 
+  function getMovies(url) {
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      showMovies(data.results.slice(0, 10))
+    })
+  }
+  */
 });
 
 app.listen(port, () => {
