@@ -13,6 +13,7 @@ const SearchBar = () => {
     try {
       const response = await fetch(`http://localhost:3000/movies?search=${search}`);
       const data = await response.json();
+      // log out the data to make sure it's what you expect
       console.log("data.results:", data.results);
     } catch (error) {
       console.error("Error searching movies:", error);

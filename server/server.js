@@ -19,7 +19,22 @@ app.get("/movies", async (req, res) => {
 
   fetch(url, options)
     .then((res) => res.json())
-    .then((json) => console.log(json))
+    .then((json) => {
+      json.results = json.results.slice(0, 10);
+      // redefine each movie in json.results to include only the properties we want:
+      // movie_id, title, poster_image_url
+      json.results = json.results.map((movie) => {
+        return {
+          movie_id: movie.id,
+          title: movie.title,
+          poster_image_url: movie.poster_path,
+        };
+      });
+
+      json.results.forEach((movie) => {
+        console.log(movie);
+      });
+    })
     .catch((err) => console.error("error:" + err));
 });
 
