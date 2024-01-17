@@ -1,20 +1,35 @@
 import { useState } from "react";
 
 const SearchBar = () => {
-  const [input, setInput] = useState("");
+  const [search, setSearch] = useState("");
 
-  const handleSearch = () => {
-    console.log(input);
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
   };
 
+  const handleSearchSubmit = async (e) => {
+    e.preventDefault(); // Prevents the default form submission behavior
+
+    try {
+      const response = await fetch(`http://localhost:3000/movies?search=${search}`);
+      const data = await response.json();
+      console.log("data.results:", data.results);
+    } catch (error) {
+      console.error("Error searching movies:", error);
+    }
+  };
+
+  // TODO: upon successful search, show a list of the returned values
   return (
     <div className="search-bar">
-      <div>
-        <input type="text" placeholder="Search..." value={input} onChange={(e) => setInput(e.target.value)} />
-      </div>
-      <div>
-        <button onClick={handleSearch}>Search</button>
-      </div>
+      <form onSubmit={handleSearchSubmit}>
+        <div>
+          <input type="text" placeholder="Search..." value={search} onChange={handleSearchChange} />
+        </div>
+        <div>
+          <button type="submit">Search</button>
+        </div>
+      </form>
     </div>
   );
 };

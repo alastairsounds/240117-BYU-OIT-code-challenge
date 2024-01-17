@@ -2,12 +2,12 @@ import express from "express";
 import fetch from "node-fetch";
 
 const app = express();
-const port = 3000;
+const PORT = 3000;
 
-app.get(`/movies?search=${title}`, async (req, res) => {
-  const fetch = require("node-fetch");
+app.get("/movies", async (req, res) => {
+  const { search } = req.query;
 
-  const url = "https://api.themoviedb.org/3/search/movie?query=marvel&include_adult=false&language=en-US&page=1";
+  const url = `https://api.themoviedb.org/3/search/movie?query=${search}&include_adult=false&language=en-US&page=1`;
   const options = {
     method: "GET",
     headers: {
@@ -23,6 +23,6 @@ app.get(`/movies?search=${title}`, async (req, res) => {
     .catch((err) => console.error("error:" + err));
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
