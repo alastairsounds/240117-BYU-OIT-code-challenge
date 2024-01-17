@@ -1,12 +1,15 @@
 import { useState } from "react";
 import "./App.css";
 
+import SearchBar from "./components/SearchBar";
+
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <h1>Vite + React</h1>
+      <h1>Movie Search</h1>
+      <SearchBar />
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
         <p>
