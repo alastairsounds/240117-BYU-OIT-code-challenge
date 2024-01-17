@@ -20,20 +20,22 @@ app.get("/movies", async (req, res) => {
   fetch(url, options)
     .then((res) => res.json())
     .then((json) => {
+      // reduce the number of movies to 10
       json.results = json.results.slice(0, 10);
+
       // redefine each movie in json.results to include only the properties we want:
       // movie_id, title, poster_image_url
       json.results = json.results.map((movie) => {
         return {
           movie_id: movie.id,
           title: movie.title,
-          poster_image_url: movie.poster_path,
+          poster_image_url: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
+          popularity_summary: `Popularity score of ${movie.popularity} from ${movie.vote_count} votes`,
         };
       });
 
-      json.results.forEach((movie) => {
-        console.log(movie);
-      });
+      console.log(json.results);
+      return json.results;
     })
     .catch((err) => console.error("error:" + err));
 });
